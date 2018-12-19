@@ -9,4 +9,9 @@ contract UpdatableProxy is Proxy, UpdatableProxyShared {
         Proxy(proxied)
         OwnableData(owner)
     {}
+
+    function proxyType() public pure returns (uint256) {
+        return 2; // for "upgradable proxy"
+                  // again, see EIP 897
+    }
 }

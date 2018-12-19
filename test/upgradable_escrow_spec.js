@@ -47,7 +47,7 @@ contract("Upgradable Escrow", function () {
     // Escrow v2
     EscrowV2.options.address = instanceAddress;
 
-    console.log(await EscrowV2.methods.SetNewVariable(true).send());
+    console.dir((await EscrowV2.methods.SetNewVariable(true).send()).events);
 
     console.log(await EscrowV2.methods.GetNewVariable().call());
 

@@ -17,7 +17,8 @@ contract Escrow is UpdatableProxyImplementation, EscrowData, Pausable {
     }
     
     function init(address _license, address _ownerAddress) public {
-        require(license == address(0) , "Already initialized");
+        require(address(license) == address(0) , "Already initialized");
+        require(owner == address(0), "Already initialized");
         license = License(_license); 
         owner = _ownerAddress;
     }

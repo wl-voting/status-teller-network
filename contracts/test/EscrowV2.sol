@@ -11,27 +11,22 @@ contract EscrowV2DataInternal is EscrowDataInternal {
 
 contract EscrowV2Data is EscrowData {
     bool public newVariable;
-    event X();
+    event NewEscrowV2Event();
 }
 
 contract EscrowV2Proxy is EscrowProxy, EscrowV2DataInternal {
     constructor(address _proxied, address _license, address _owner)
-        public
-        EscrowProxy(_proxied, _license, _owner)
-    {
-        newVariable = true;
-    }
+    public
+    EscrowProxy(_proxied, _license, _owner){}
 }
 
 contract EscrowV2 is Escrow, EscrowV2Data {
 
-    constructor(address _license) public Escrow(_license){
-        
-    }
+    constructor(address _license) public Escrow(_license){}
 
-    // Only methods
+    // Only add new methods here
     function SetNewVariable(bool _newVariable) public {
-        emit X();
+        emit NewEscrowV2Event();
         newVariable = _newVariable;
     }
 

@@ -7,6 +7,15 @@ contract Proxy is ProxyData {
         proxied = _proxied;
     }
 
+    function implementation() public view returns (address) {
+        return proxied;
+    }
+    
+    function proxyType() public pure returns (uint256) {
+        return 1; // for "forwarding proxy"
+                  // see EIP 897 for more details
+    }
+
     function () external payable {
         address addr = proxied;
         assembly {
