@@ -49,11 +49,11 @@ module.exports = {
     //            when not specified
     // - explicit will only attempt to deploy the contracts that are explicity specified inside the
     //            contracts section.
-    //strategy: 'implicit',
+    strategy: 'explicit',
 
     contracts: {
       License: {
-       args: [ "0x0", 1 ]
+       args: ["0x0", 1]
       },
       Escrow: {
         args: ["$License"]
@@ -84,7 +84,7 @@ module.exports = {
   // merges with the settings in default
   // used with "embark run livenet"
   livenet: {
-  },
+  }
 
   // you can name an environment with specific settings and then specify with
   // "embark run custom_name" or "embark blockchain custom_name"

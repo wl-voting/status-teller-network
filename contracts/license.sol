@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "./ownable.sol";
+import "./common/Ownable.sol";
 
 /**
 * @title License
@@ -16,7 +16,9 @@ contract License is Ownable {
     event RecipientChanged(address _recipient);
     event PriceChanged(uint256 _price);
 
-    constructor(address payable _recipient, uint256 _price) public {
+    constructor(address payable _recipient, uint256 _price) 
+        public 
+        OwnableData(msg.sender) {
         recipient = _recipient;
         price = _price;
     }

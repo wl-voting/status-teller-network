@@ -1,35 +1,25 @@
 pragma solidity ^0.5.0;
 
-import "./ownable.sol";
-import "./pausable.sol";
-import "./license.sol";
+import "../common/Ownable.sol";
+import "../common/Pausable.sol";
+import "../license.sol";
+import "./EscrowData.sol";
+import "../proxy/UpdatableProxyImplementation.sol";
 
 /**
  * @title Escrow
  * @dev Escrow contract for buying/selling ETH. Current implementation lacks arbitrage, marking trx as paid, and ERC20 support
  */
-contract Escrow is Pausable {
+contract Escrow is UpdatableProxyImplementation, EscrowData, Pausable {
 
-    constructor(address _license) public {
+    constructor(address _license) public OwnableData(msg.sender){
+        init(_license, msg.sender);
+    }
+    
+    function init(address _license, address _ownerAddress) public {
         license = License(_license);
+        owner = _ownerAddress;
     }
-
-    struct EscrowTransaction {
-        address payable seller;
-        address payable buyer;
-        uint amount;
-        uint expirationTime;
-        bool released;
-        bool canceled;
-    }
-
-    EscrowTransaction[] public transactions;
-
-    License public license;
-
-    event Created(address indexed seller, address indexed buyer, uint amount, uint escrowId);
-    event Paid(uint escrowId);
-    event Canceled(uint escrowId);
 
     /**
      * @dev Create a new escrow
@@ -39,7 +29,7 @@ contract Escrow is Pausable {
      *         The seller needs to be licensed.
      *         The expiration time must be at least 10min in the future
      */
-    function create(address payable _buyer, uint _expirationTime) public payable whenNotPaused {
+    function create(address payable _buyer, uint _expirationTime) payable public whenNotPaused {
         require(_expirationTime > (block.timestamp + 600), "Expiration time must be at least 10min in the future");
         require(msg.value > 0, "ETH amount is required"); // TODO: abstract this to use ERC20. Maybe thru the use of wETH
         require(license.isLicenseOwner(msg.sender), "Must be a valid seller to create escrow transactions");
