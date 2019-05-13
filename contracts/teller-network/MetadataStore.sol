@@ -83,12 +83,25 @@ contract MetadataStore is Ownable {
         license = _license;
     }
 
+    function contactCodeToWallet (bytes memory _contactCode) private view returns (address){
+        bytes memory publicKey = new bytes(64);
+        assembly {
+            mstore(add(publicKey, 32), mload(add(_contactCode, 33)))
+            mstore(add(publicKey, 64), mload(add(_contactCode, 65)))
+        }
+        return address(uint160(uint256(keccak256(publicKey))));
+    }
+
     function addOrUpdateUser(
         address _user,
         bytes memory _statusContactCode,
         string memory _location,
         string memory _username
     ) public {
+        address contactCodeOwner = contactCodeToWallet(_statusContactCode);
+
+        require(contactCodeOwner == _user, "Contact code does not belong to _user");
+
         if (!userWhitelist[_user]) {
             User memory user = User(_statusContactCode, _location, _username);
             uint256 userId = users.push(user) - 1;
