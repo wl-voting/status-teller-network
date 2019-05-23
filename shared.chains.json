@@ -136,6 +136,18 @@
       "0x2cfaa9e2724956a201dd16805176b90f48d9e57ccede38d817285961080f484e": {
         "name": "Escrow",
         "address": "0x752E01C4Faa49b7eC559b868e7d3A03ECB8bE846"
+      },
+      "0xb4874cf210dd4b59b698748d9eb5ffaf789f305e92fddb8284aa629de6661409": {
+        "name": "Arbitration",
+        "address": "0x0865125010cF7FE26eac7505494ce5857dA21637"
+      },
+      "0x6d4e8e946fb762f88afe6783873931549a2f64c8490446ffad72c84453ddbc0b": {
+        "name": "MetadataStore",
+        "address": "0x1FE85cD682D6B8E92786bca80283eB326fc6284D"
+      },
+      "0x1764f25893bfec1ca149ed7b84ee940f2d8ac80111f613212d671925be29574c": {
+        "name": "Escrow",
+        "address": "0x0d88E9312aCe6A50b6c32D5535Dd1449fAde2ac4"
       }
     }
   }
